@@ -1,14 +1,14 @@
-import React, { PureComponent } from 'react'
+import React from 'react'
 
 
-export class Dice extends PureComponent {
-  render() {
+export function Dice(props) {
+
+    if (props.randomNumber === 0 ) return <div>Give it a try!</div>
     return (
       <div>
-        <p>Test</p>
+        {props.randomNumber}
       </div>
     )
   }
-}
 
 export default Dice

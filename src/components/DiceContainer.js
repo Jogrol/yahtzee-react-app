@@ -22,7 +22,6 @@ export default class DiceContainer extends Component {
   shakeDice = () => {
     let randomNumbers = Array.from({length: 5}, () => Math.floor(Math.random() * 6) + 1)
     this.setState({randomNumbers: randomNumbers})
-    console.log(this.state)
   }
 
 
@@ -31,7 +30,7 @@ export default class DiceContainer extends Component {
     console.log(this.state)
     return (
       <div>
-        <Dice randomNumber={this.state.randomNumbers[0]} />
+        <Dice randomNumber={Number(this.state.randomNumbers[0])} />
         <Dice randomNumber={this.state.randomNumbers[1]} />
         <Dice randomNumber={this.state.randomNumbers[2]} />
         <Dice randomNumber={this.state.randomNumbers[3]} />
