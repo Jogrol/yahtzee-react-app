@@ -21,7 +21,7 @@ function NavBar(props) {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" color="blue">
+      <AppBar position="static" color="black">
         <Toolbar>
           <Typography variant="h4" color="inherit">
             Yhatzee!
