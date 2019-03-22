@@ -11,30 +11,29 @@ import Button from '@material-ui/core/Button';
 export default class DiceContainer extends Component {
 
   state = {
-    randomNumbers: [0,0,0,0,0]
+    randomNumbers: [0,0,0,0,0],
+    keepNumber: [0]
   }
 
   static propTypes = {
     prop: PropTypes
   }
 
+  keepDice = (props) => {
+    console.log('keep', props)
+  }
 
   shakeDice = () => {
     let randomNumbers = Array.from({length: 5}, () => Math.floor(Math.random() * 6) + 1)
     this.setState({randomNumbers: randomNumbers})
+    
   }
 
 
   render() {
-    const { classes } = this.props;
-    console.log(this.state)
     return (
       <div>
-        <Dice randomNumber={Number(this.state.randomNumbers[0])} />
-        <Dice randomNumber={this.state.randomNumbers[1]} />
-        <Dice randomNumber={this.state.randomNumbers[2]} />
-        <Dice randomNumber={this.state.randomNumbers[3]} />
-        <Dice randomNumber={this.state.randomNumbers[4]} />
+        {this.state.randomNumbers.map(randomNumber => <Dice randomNumber={randomNumber} keepDice={this.keepDice} />)}
         <Button  onClick={()=> {this.shakeDice()}}variant="contained" color="primary">
         Through the dices!
       </Button>
