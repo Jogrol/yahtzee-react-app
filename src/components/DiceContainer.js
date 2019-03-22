@@ -1,8 +1,6 @@
 
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import Dice from './Dice'
-
 import Button from '@material-ui/core/Button';
 
 
@@ -11,19 +9,17 @@ import Button from '@material-ui/core/Button';
 export default class DiceContainer extends Component {
 
   state = {
-    counter: 0,
-    newRandomNumber: [{1:0},{2:0}],
-    randomNumbers: [0,0,0,0,0],
+    counter: 1,
+    randomNumbers: [],
     keepNumbers: []
-  }
-
-  static propTypes = {
-    prop: PropTypes
   }
 
   keepDice = (props) => {
     this.state.keepNumbers.push(props)
-    console.log(this.state.keepNumbers)
+  }
+
+  RemoveDice = (props) => {
+    this.state.keepNumbers.shift(props)
   }
 
   returnRandomNumbers = () => {
@@ -31,33 +27,36 @@ export default class DiceContainer extends Component {
   }
 
   roundOne = () => {
-    this.setState({randomNumbers: this.returnRandomNumbers(), counter: +1})
-
+    this.setState({randomNumbers: this.returnRandomNumbers(), counter: this.state.counter+1})
+    console.log(this.state.counter)
   }
 
-  roundTwo = () => {
-    let updateNumbers = this.state.keepNumbers.concat(this.returnRandomNumbers())
-    console.log(updateNumbers)
-    this.setState({randomNumbers: updateNumbers, counter: +1})
+  roundNumber = () => {
+    if(this.state.counter === 1) {
+      return "First round"
+    } else if (this.state.counter === 2) {
+      return "Second round"}
+    else if(this.state.counter === 3) {
+      return "Third round"
+    } else if(this.state.counter > 3) {
+      this.setState({randomNumbers: this.returnRandomNumbers(), counter: 1})
+    }
   }
-
-
 
   render() {
     return (
       <div>
-      <div>
-        {this.state.randomNumbers.map(randomNumber => <Dice randomNumber={randomNumber} keepDice={this.keepDice} />)}
-        <Button  onClick={()=> {this.roundOne()}}variant="contained" color="primary">
-        First round!
-      </Button>
-      <Button  onClick={()=> {this.roundTwo()}}variant="contained" color="primary">
-        Second round!
-      </Button>
-      </div>
-      <div>
-      {/* {this.state.newRandomNumber.map(randomNumber => <Dice randomNumber={randomNumber} keepDice={this.keepDice} />)} */}
-      </div>
+        <div>
+          Kept:
+          {this.state.keepNumbers.map(keepNumbers => <Dice number={keepNumbers} keepDice={this.RemoveDice}/>)}
+        </div>
+        <div>
+          In the game:
+          {this.state.randomNumbers.map(randomNumber => <Dice number={randomNumber} keepDice={this.keepDice} />)}
+          <Button  onClick={()=> {this.roundOne()}}variant="contained" color="primary">
+          {this.roundNumber()}
+          </Button>
+        </div>
       </div>
     )
   }
